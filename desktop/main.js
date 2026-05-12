@@ -14,13 +14,14 @@ const MAX_LOG_ENTRIES = 400;
 const isPackaged = app.isPackaged;
 const packagedBackendDir = path.join(process.resourcesPath, "backend");
 const devBackendDir = path.resolve(__dirname, "..");
+const BACKEND_ENTRYPOINT_FILE = "main.py";
 
 const defaultConfig = {
   mode: "connect",
   backendHost: "127.0.0.1",
   backendPort: 8008,
   backendCommand: "python",
-  backendEntry: isPackaged ? path.join(packagedBackendDir, "main.py") : path.join(devBackendDir, "main.py"),
+  backendEntry: isPackaged ? path.join(packagedBackendDir, BACKEND_ENTRYPOINT_FILE) : path.join(devBackendDir, BACKEND_ENTRYPOINT_FILE),
   backendCwd: isPackaged ? packagedBackendDir : devBackendDir,
   mediaProvider: "mediamtx",
   mediaHost: "127.0.0.1",
@@ -72,7 +73,8 @@ function splitArgs(rawArgs) {
   if (!rawArgs || !rawArgs.trim()) {
     return [];
   }
-  return rawArgs.split(" ").filter(Boolean);
+  const matches = rawArgs.match(/"[^"]*"|'[^']*'|[^\s]+/g) || [];
+  return matches.map((part) => part.replace(/^['"]|['"]$/g, ""));
 }
 
 function startManagedProcess(name, command, args, options = {}) {

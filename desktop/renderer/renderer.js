@@ -20,7 +20,7 @@ const fields = [
   "dahuaPassword",
   "dahuaBaseUrl"
 ];
-const MAX_DISPLAYED_LOGS = 80;
+const UI_LOG_LIMIT = 80;
 
 function element(id) {
   return document.getElementById(id);
@@ -61,7 +61,7 @@ function renderStatus(status) {
 async function refreshLogs() {
   const logs = await window.desktopApi.getLogs();
   element("logs").textContent = logs
-    .slice(0, MAX_DISPLAYED_LOGS)
+    .slice(0, UI_LOG_LIMIT)
     .map((entry) => `[${entry.ts}] [${entry.source}] ${entry.message}`)
     .join("\n");
 }

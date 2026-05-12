@@ -1,4 +1,5 @@
 from typing import Optional
+import re
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -52,9 +53,9 @@ class Settings(BaseSettings):
         else:
             template = self.MEDIA_PATH_TEMPLATE_MEDIAMTX
 
-        path = template.format(id_camera_vms=id_camera_vms, stream_index=stream_index)
-        if not path.startswith("/"):
-            path = f"/{path}"
+        path = template.format(id_camera_vms=id_camera_vms, stream_index=stream_index).strip()
+        path = "/" + path.lstrip("/")
+        path = re.sub(r"/{2,}", "/", path)
         return f"rtsp://{self.get_media_host()}:{self.get_media_port()}{path}"
 
 

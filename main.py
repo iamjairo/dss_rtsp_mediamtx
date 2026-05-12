@@ -20,6 +20,8 @@ from app.config.settings import settings
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     print("Starting the server")
+    if not settings.DAHUA_PASSWORD:
+        logging.warning("DAHUA_PASSWORD is empty. Configure it with environment variables before production use.")
     database_manager_sqlite.create_tables()
     camera_service.load_all_camera()
     yield
