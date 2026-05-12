@@ -34,7 +34,7 @@ const defaultConfig = {
   go2rtcExecutable: "",
   go2rtcArgs: "",
   dahuaUsername: "system",
-  dahuaPassword: "Oryza@123",
+  dahuaPassword: "",
   dahuaBaseUrl: "http://192.168.105.15:8000"
 };
 

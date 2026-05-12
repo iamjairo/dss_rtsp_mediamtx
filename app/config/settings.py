@@ -21,7 +21,7 @@ class Settings(BaseSettings):
     MEDIA_PATH_TEMPLATE_CUSTOM: Optional[str] = None
 
     DAHUA_USERNAME: Optional[str] = "system"
-    DAHUA_PASSWORD: Optional[str] = "Oryza@123"
+    DAHUA_PASSWORD: Optional[str] = ""
     DAHUA_URL_BASE: Optional[str] = "http://192.168.105.15:8000"
     DAHUA_PORT_REPLACE: Optional[int] = None
     DAHUA_IP_REPLACE: Optional[str] = None
@@ -38,11 +38,11 @@ class Settings(BaseSettings):
             return "mediamtx"
         return self.MEDIA_PROVIDER.lower()
 
-    def build_output_url(self, id_camera_vms: str, stream_number: str):
+    def build_output_url(self, id_camera_vms: str, stream_kind: str):
         """
-        stream_number: "1" for main stream, "2" for sub stream.
+        stream_kind: "main" for main stream, "sub" for sub stream.
         """
-        stream_index = "0" if stream_number == "1" else "1"
+        stream_index = "0" if stream_kind == "main" else "1"
         provider = self.get_media_provider()
 
         if provider == "go2rtc":
