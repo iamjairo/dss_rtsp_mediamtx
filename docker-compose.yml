@@ -5,8 +5,6 @@ services:
       dockerfile: Dockerfile
     container_name: dss_backend
     restart: unless-stopped
-    env_file:
-      - .env
     environment:
       PORT: ${PORT:-8008}
       APP_HOST: ${APP_HOST:-0.0.0.0}
