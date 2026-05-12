@@ -1,0 +1,16 @@
+.git
+.gitignore
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+env/
+ENV/
+node_modules/
+desktop/node_modules/
+desktop/dist/
+smart-signal.db

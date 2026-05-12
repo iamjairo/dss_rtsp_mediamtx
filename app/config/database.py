@@ -5,13 +5,14 @@ import importlib
 import pkgutil
 from contextlib import contextmanager
 
+from app.config.settings import settings
 from app.model.base_model import BaseModel
 from app import model as model_package  # import package app/model
 
 
 class DatabaseManagerSqlite:
     def __init__(self):
-        db_path =  'smart-signal.db'
+        db_path = settings.DB_PATH or "smart-signal.db"
         # Tạo thư mục data nếu chưa có
         db_dir = os.path.dirname(db_path)
         if db_dir and not os.path.exists(db_dir):
