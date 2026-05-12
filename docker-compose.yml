@@ -1,0 +1,68 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dss_backend
+    restart: unless-stopped
+    environment:
+      PORT: ${PORT:-8008}
+      APP_HOST: ${APP_HOST:-0.0.0.0}
+      APP_ROOT_PATH: ${APP_ROOT_PATH:-/dss}
+      MEDIA_PROVIDER: ${MEDIA_PROVIDER:-mediamtx}
+      MEDIA_HOST: ${MEDIA_HOST:-mediamtx}
+      MEDIA_PORT: ${MEDIA_PORT:-8554}
+      IP_MEDIA_MTX: ${IP_MEDIA_MTX:-mediamtx}
+      PORT_MEDIA_MTX: ${PORT_MEDIA_MTX:-8554}
+      DAHUA_USERNAME: ${DAHUA_USERNAME:-system}
+      DAHUA_PASSWORD: ${DAHUA_PASSWORD:-}
+      DAHUA_URL_BASE: ${DAHUA_URL_BASE:-http://192.168.105.15:8000}
+      DAHUA_PORT_REPLACE: ${DAHUA_PORT_REPLACE:-}
+      DAHUA_IP_REPLACE: ${DAHUA_IP_REPLACE:-}
+      DB_PATH: ${DB_PATH:-/data/smart-signal.db}
+      MEDIA_PATH_TEMPLATE_MEDIAMTX: ${MEDIA_PATH_TEMPLATE_MEDIAMTX:-/live/liveStream_{id_camera_vms}_0_{stream_index}}
+      MEDIA_PATH_TEMPLATE_GO2RTC: ${MEDIA_PATH_TEMPLATE_GO2RTC:-/liveStream_{id_camera_vms}_0_{stream_index}}
+      MEDIA_PATH_TEMPLATE_CUSTOM: ${MEDIA_PATH_TEMPLATE_CUSTOM:-}
+    ports:
+      - "${PORT:-8008}:${PORT:-8008}"
+    volumes:
+      - ./data:/data
+    depends_on:
+      mediamtx:
+        condition: service_started
+        required: false
+      go2rtc:
+        condition: service_started
+        required: false
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:$${PORT:-8008}/health || exit 1"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  mediamtx:
+    image: bluenviron/mediamtx:latest
+    container_name: dss_mediamtx
+    restart: unless-stopped
+    profiles: ["mediamtx"]
+    ports:
+      - "8554:8554"
+      - "8888:8888"
+
+  go2rtc:
+    image: alexxit/go2rtc:latest
+    container_name: dss_go2rtc
+    restart: unless-stopped
+    profiles: ["go2rtc"]
+    ports:
+      - "1984:1984"
+      - "8555:8554"
+    volumes:
+      - ./docker/go2rtc.yaml:/config/go2rtc.yaml:ro
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "-", "http://localhost:1984/api"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 15s

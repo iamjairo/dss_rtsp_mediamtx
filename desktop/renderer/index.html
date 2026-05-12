@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DSS RTSP Desktop</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>DSS RTSP Desktop</h1>
+      <p>Connect to Docker deployment or run backend locally.</p>
+
+      <section class="panel">
+        <h2>Runtime Mode</h2>
+        <select id="mode">
+          <option value="connect">Connect to existing backend</option>
+          <option value="standalone">Standalone (run local backend)</option>
+        </select>
+      </section>
+
+      <section class="panel grid">
+        <h2>Backend</h2>
+        <label>Host <input id="backendHost" /></label>
+        <label>Port <input id="backendPort" type="number" /></label>
+        <label>Python Command <input id="backendCommand" /></label>
+        <label>Backend Entry <input id="backendEntry" /></label>
+        <label>Backend CWD <input id="backendCwd" /></label>
+      </section>
+
+      <section class="panel grid">
+        <h2>Media</h2>
+        <label>Provider
+          <select id="mediaProvider">
+            <option value="mediamtx">mediamtx</option>
+            <option value="go2rtc">go2rtc</option>
+            <option value="custom">custom</option>
+          </select>
+        </label>
+        <label>Media Host <input id="mediaHost" /></label>
+        <label>Media Port <input id="mediaPort" type="number" /></label>
+        <label>go2rtc Host <input id="go2rtcHost" /></label>
+        <label>go2rtc Port <input id="go2rtcPort" type="number" /></label>
+      </section>
+
+      <section class="panel grid">
+        <h2>Standalone Optional Services</h2>
+        <label><input id="useLocalMediamtx" type="checkbox" /> Start local mediamtx</label>
+        <label>mediamtx executable <input id="mediamtxExecutable" /></label>
+        <label>mediamtx args <input id="mediamtxArgs" /></label>
+        <label><input id="useLocalGo2rtc" type="checkbox" /> Start local go2rtc</label>
+        <label>go2rtc executable <input id="go2rtcExecutable" /></label>
+        <label>go2rtc args <input id="go2rtcArgs" /></label>
+      </section>
+
+      <section class="panel grid">
+        <h2>Dahua</h2>
+        <label>Username <input id="dahuaUsername" /></label>
+        <label>Password <input id="dahuaPassword" type="password" /></label>
+        <label>Base URL <input id="dahuaBaseUrl" /></label>
+      </section>
+
+      <section class="panel actions">
+        <button id="saveBtn">Save Settings</button>
+        <button id="checkBtn">Check Status</button>
+        <button id="startBtn">Start Standalone</button>
+        <button id="stopBtn">Stop Standalone</button>
+      </section>
+
+      <section class="panel">
+        <h2>Status</h2>
+        <div id="status"></div>
+      </section>
+
+      <section class="panel">
+        <h2>Logs</h2>
+        <pre id="logs"></pre>
+      </section>
+    </main>
+    <script src="./renderer.js"></script>
+  </body>
+  </html>

@@ -1,0 +1,52 @@
+{
+  "name": "dss-rtsp-desktop",
+  "version": "0.1.0",
+  "description": "Desktop controller for DSS RTSP backend and media services",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "com.dss.rtsp.desktop",
+    "productName": "DSS RTSP Desktop",
+    "files": [
+      "main.js",
+      "preload.js",
+      "renderer/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "../app",
+        "to": "backend/app"
+      },
+      {
+        "from": "../templates",
+        "to": "backend/templates"
+      },
+      {
+        "from": "../main.py",
+        "to": "backend/main.py"
+      },
+      {
+        "from": "../requirements.txt",
+        "to": "backend/requirements.txt"
+      }
+    ],
+    "mac": {
+      "target": "dmg"
+    },
+    "linux": {
+      "target": "AppImage"
+    },
+    "win": {
+      "target": "nsis"
+    }
+  },
+  "devDependencies": {
+    "electron": "^39.8.1",
+    "electron-builder": "^24.13.3"
+  }
+}

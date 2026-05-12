@@ -8,6 +8,10 @@ test/
 # C extensions
 *.so
 .idea
+desktop/node_modules/
+desktop/dist/
+desktop/release/
+desktop/.cache/
 # Distribution / packaging
 .Python
 build/
