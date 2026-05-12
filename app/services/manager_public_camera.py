@@ -128,8 +128,8 @@ class ManagerPublicCamera:
         return self.list_camera
 
     def add_camera(self, id_camera, channel_id, id_camera_vms):
-        output_url_main = settings.build_output_url(id_camera_vms=id_camera_vms, stream_type="1")
-        output_url_sub = settings.build_output_url(id_camera_vms=id_camera_vms, stream_type="2")
+        output_url_main = settings.build_output_url(id_camera_vms=id_camera_vms, stream_number="1")
+        output_url_sub = settings.build_output_url(id_camera_vms=id_camera_vms, stream_number="2")
         self.delete_camera(id_camera)
 
         rtsp_process_main = RTSPProcess(id_camera=id_camera)

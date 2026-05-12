@@ -9,6 +9,7 @@ let backendProcess = null;
 let mediamtxProcess = null;
 let go2rtcProcess = null;
 const logs = [];
+const MAX_LOG_ENTRIES = 400;
 
 const isPackaged = app.isPackaged;
 const packagedBackendDir = path.join(process.resourcesPath, "backend");
@@ -43,8 +44,8 @@ function pushLog(source, message) {
     message,
     ts: new Date().toISOString()
   });
-  if (logs.length > 400) {
-    logs.splice(0, logs.length - 400);
+  if (logs.length > MAX_LOG_ENTRIES) {
+    logs.splice(0, logs.length - MAX_LOG_ENTRIES);
   }
 }
 

@@ -38,8 +38,11 @@ class Settings(BaseSettings):
             return "mediamtx"
         return self.MEDIA_PROVIDER.lower()
 
-    def build_output_url(self, id_camera_vms: str, stream_type: str):
-        stream_index = "0" if stream_type == "1" else "1"
+    def build_output_url(self, id_camera_vms: str, stream_number: str):
+        """
+        stream_number: "1" for main stream, "2" for sub stream.
+        """
+        stream_index = "0" if stream_number == "1" else "1"
         provider = self.get_media_provider()
 
         if provider == "go2rtc":
